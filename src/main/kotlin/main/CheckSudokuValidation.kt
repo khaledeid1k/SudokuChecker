@@ -12,11 +12,25 @@ fun checkSudokuValidation(sudokuNumbers: List<List<String>>): Boolean {
     for (col in sudokuNumbers.indices) {
         val column = mutableListOf<String>()
         for (element in sudokuNumbers) {
-          column.add(element[col])
+            column.add(element[col])
         }
         if (!isValidUnit(column)) return false
         column.clear()
 
+    }
+
+    for (rowStart in sudokuNumbers.indices step 3) {
+        println(rowStart)
+        for (colStart in sudokuNumbers.indices step 3) {
+            val subGrid = mutableListOf<String>()
+            for (r in 0 until 3) {
+                for (c in 0 until 3) {
+                    subGrid.add(sudokuNumbers[rowStart + r][colStart + c])
+                }
+            }
+
+            if (!isValidUnit(subGrid)) return false
+        }
     }
     return true
 }
