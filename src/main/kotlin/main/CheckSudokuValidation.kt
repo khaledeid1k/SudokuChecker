@@ -1,34 +1,52 @@
 package main
 
 fun checkSudokuValidation(sudokuNumbers: List<List<String>>): Boolean {
+    val validChars = generateValidChars(sudokuNumbers.size)
+
+    if (!containsOnlyValidChars(sudokuNumbers, validChars)) return false
+    if (!rowsAreValid(sudokuNumbers)) return false
+    if (!columnsAreValid(sudokuNumbers)) return false
+    if (!subGridsAreValid(sudokuNumbers)) return false
+
+    return true
+}
+
+fun generateValidChars(size: Int): List<String> {
     val validChars = mutableListOf("-")
-    for (i in 1..sudokuNumbers.size) {
+    for (i in 1..size) {
         validChars.add(i.toString())
     }
-    if (sudokuNumbers.any { row -> row.any { it !in validChars } }) return false
-    for (row in sudokuNumbers) {
-        if (!isValidUnit(row)) return false
-    }
-    for (col in sudokuNumbers.indices) {
+    return validChars
+}
+
+fun containsOnlyValidChars(sudoku: List<List<String>>, validChars: List<String>): Boolean {
+    return sudoku.all { row -> row.all { it in validChars } }
+}
+
+fun rowsAreValid(sudoku: List<List<String>>): Boolean {
+    return sudoku.all { isValidUnit(it) }
+}
+
+fun columnsAreValid(sudoku: List<List<String>>): Boolean {
+    for (col in sudoku.indices) {
         val column = mutableListOf<String>()
-        for (element in sudokuNumbers) {
-            column.add(element[col])
+        for (row in sudoku) {
+            column.add(row[col])
         }
         if (!isValidUnit(column)) return false
-        column.clear()
-
     }
+    return true
+}
 
-    for (rowStart in sudokuNumbers.indices step 3) {
-        println(rowStart)
-        for (colStart in sudokuNumbers.indices step 3) {
+fun subGridsAreValid(sudoku: List<List<String>>): Boolean {
+    for (rowStart in sudoku.indices step 3) {
+        for (colStart in sudoku.indices step 3) {
             val subGrid = mutableListOf<String>()
             for (r in 0 until 3) {
                 for (c in 0 until 3) {
-                    subGrid.add(sudokuNumbers[rowStart + r][colStart + c])
+                    subGrid.add(sudoku[rowStart + r][colStart + c])
                 }
             }
-
             if (!isValidUnit(subGrid)) return false
         }
     }
