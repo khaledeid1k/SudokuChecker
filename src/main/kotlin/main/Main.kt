@@ -14,6 +14,51 @@ fun main() {
         ),
         expectedResult = true
     )
+    checkResult(
+        caseName = "when no repeated number at row and at column 4*4 should return true",
+        actualResult = checkSudokuValidation(
+            listOf(
+                listOf("1", "2", "3","4"),
+                listOf("3", "1", "4","2"),
+                listOf("4", "3", "2","1"),
+                listOf("2", "4", "1","3"),
+            )
+        ),
+        expectedResult = true
+    )
+    checkResult(
+        caseName = "when no repeated number at row and at column 5x5 should return true",
+        actualResult = checkSudokuValidation(
+            listOf(
+                listOf("1", "2", "3", "4", "5"),
+                listOf("2", "3", "4", "5", "1"),
+                listOf("3", "4", "5", "1", "2"),
+                listOf("4", "5", "1", "2", "3"),
+                listOf("5", "1", "2", "3", "4")
+            )
+        ),
+        expectedResult = true
+    )
+
+    checkResult(
+        caseName = "when no repeated number at row and at column 9x9 should return true",
+        actualResult = checkSudokuValidation(
+            listOf(
+                listOf("1", "2", "3", "4", "5", "6", "7", "8", "9"),
+                listOf("2", "3", "4", "5", "6", "7", "8", "9", "1"),
+                listOf("3", "4", "5", "6", "7", "8", "9", "1", "2"),
+                listOf("4", "5", "6", "7", "8", "9", "1", "2", "3"),
+                listOf("5", "6", "7", "8", "9", "1", "2", "3", "4"),
+                listOf("6", "7", "8", "9", "1", "2", "3", "4", "5"),
+                listOf("7", "8", "9", "1", "2", "3", "4", "5", "6"),
+                listOf("8", "9", "1", "2", "3", "4", "5", "6", "7"),
+                listOf("9", "1", "2", "3", "4", "5", "6", "7", "8")
+            )
+        ),
+        expectedResult = true
+    )
+
+
 
 
     checkResult(

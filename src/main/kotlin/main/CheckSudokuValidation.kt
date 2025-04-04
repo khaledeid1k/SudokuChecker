@@ -1,14 +1,22 @@
 package main
 
 fun checkSudokuValidation(sudokuNumbers: List<List<String>>): Boolean {
-    val validChars = listOf("-","1", "2", "3")
+    val validChars = mutableListOf("-")
+    for (i in 1..sudokuNumbers.size) {
+        validChars.add(i.toString())
+    }
     if (sudokuNumbers.any { row -> row.any { it !in validChars } }) return false
     for (row in sudokuNumbers) {
         if (!isValidUnit(row)) return false
     }
-    for (col in 0..2) {
-        val column = listOf(sudokuNumbers[0][col], sudokuNumbers[1][col], sudokuNumbers[2][col])
+    for (col in sudokuNumbers.indices) {
+        val column = mutableListOf<String>()
+        for (element in sudokuNumbers) {
+          column.add(element[col])
+        }
         if (!isValidUnit(column)) return false
+        column.clear()
+
     }
     return true
 }
